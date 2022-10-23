@@ -2,5 +2,6 @@
     "login_loading": "Please wait while I log you in",
     "wait_moment": "Please wait a moment",
     "welcome": "Welcome",
-    "to": "to"
+    "to": "to",
+    "login_error": "Login error"
 }

@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "login_error": MessageLookupByLibrary.simpleMessage("Login error"),
         "login_loading": MessageLookupByLibrary.simpleMessage(
             "Please wait while I log you in"),
         "to": MessageLookupByLibrary.simpleMessage("to"),

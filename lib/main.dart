@@ -1,11 +1,11 @@
-import 'package:educode/features/auth/bloc/auth_bloc.dart';
-import 'package:educode/features/auth/provider/firebase_auth_provider.dart';
+import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/generated/l10n.dart';
 import 'package:educode/home_screen.dart';
+import 'package:educode/utils/router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -13,7 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,12 +32,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.delegate.supportedLocales,
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.orange),
-      home: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(
-          provider: FirebaseAuthProvider(),
-        ),
-        child: const HomePage(),
-      ),
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: const HomeScreen(),
     );
   }
 }
