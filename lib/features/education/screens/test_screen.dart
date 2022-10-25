@@ -1,17 +1,18 @@
 import 'package:educode/features/auth/controller/auth_controller.dart';
 import 'package:educode/features/auth/screens/welcome_screen.dart';
+import 'package:educode/features/education/components/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EducationScreen extends ConsumerWidget {
-  static const String routeName = '/education-screen';
-  const EducationScreen({super.key});
+class TestScreen extends ConsumerWidget {
+  static const String routeName = '/lessons-screen';
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('EduCode'),
+        title: const Text('Lessons'),
         actions: [
           PopupMenuButton(
             itemBuilder: (context) {
@@ -40,8 +41,9 @@ class EducationScreen extends ConsumerWidget {
         ],
       ),
       body: const Center(
-        child: Text('Education'),
+        child: Text('Test'),
       ),
+      drawer: const Drawer(child: DrawerContent()),
     );
   }
 }

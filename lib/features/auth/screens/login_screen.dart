@@ -1,5 +1,7 @@
 import 'package:educode/features/auth/controller/auth_controller.dart';
-import 'package:educode/features/education/screens/edducation_screen.dart';
+import 'package:educode/features/auth/screens/register_screen.dart';
+import 'package:educode/features/auth/screens/reset_password_screen.dart';
+import 'package:educode/features/education/screens/courses_screen.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -109,12 +111,42 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             .then(
                               (value) => Navigator.of(context)
                                   .pushNamedAndRemoveUntil(
-                                      EducationScreen.routeName,
+                                      CoursesScreen.routeName,
                                       (route) => false),
                             );
                       },
                       child: const Text(
                         'Login',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: defaultPadding,
+                  ),
+                  SizedBox(
+                    width: size.width,
+                    height: 45,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, ResetPasswordScreen.routeName);
+                      },
+                      child: const Text(
+                        'Forget password? Restore it here',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width,
+                    height: 45,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, RegisterScreen.routeName);
+                      },
+                      child: const Text(
+                        "Don't have an account? Create in here",
                         style: TextStyle(fontSize: 16),
                       ),
                     ),

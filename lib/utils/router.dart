@@ -5,7 +5,7 @@ import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
 import 'package:educode/features/auth/screens/verify_email.dart';
 import 'package:educode/features/auth/screens/welcome_screen.dart';
-import 'package:educode/features/education/screens/edducation_screen.dart';
+import 'package:educode/features/education/screens/courses_screen.dart';
 import 'package:educode/utils/screens/error_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +31,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const WelcomeScreen(),
       );
-    case EducationScreen.routeName:
+    case CoursesScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const EducationScreen(),
+        builder: (context) => const CoursesScreen(),
       );
     default:
       return MaterialPageRoute(
