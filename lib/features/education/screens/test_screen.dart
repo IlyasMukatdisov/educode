@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TestScreen extends ConsumerWidget {
-  static const String routeName = '/lessons-screen';
+  static const String routeName = '/test-screen';
   const TestScreen({super.key});
 
   @override

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educode/features/education/models/course_model.dart';
+import 'package:educode/features/education/models/section_model.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:educode/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,5 +45,26 @@ class EducationRepository {
       showSnackBar(context: context, text: e.toString());
     }
     return courses;
+  }
+
+  Future<List<SectionModel>> getSections({
+    required BuildContext context,
+    required int courseId,
+  }) async {
+    List<SectionModel> sections = [];
+    try {
+      var snapshot = await firestore
+          .collection(coursesCollection)
+          .doc(courseId.toString())
+          .collection(sectionsCollection)
+          .get();
+      for (var doc in snapshot.docs) {
+        final section = SectionModel.fromMap(doc.data());
+        sections.add(section);
+      }
+    } catch (e) {
+      showSnackBar(context: context, text: e.toString());
+    }
+    return sections;
   }
 }

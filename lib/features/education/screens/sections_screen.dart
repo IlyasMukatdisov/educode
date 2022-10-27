@@ -1,16 +1,16 @@
 import 'package:educode/features/auth/controller/auth_controller.dart';
 import 'package:educode/features/auth/screens/welcome_screen.dart';
 import 'package:educode/features/education/components/drawer.dart';
-import 'package:educode/features/education/models/course_model.dart';
+import 'package:educode/features/education/models/section_model.dart';
 import 'package:educode/features/education/repository/education_repository.dart';
-import 'package:educode/features/education/screens/sections_screen.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CoursesScreen extends ConsumerWidget {
-  static const String routeName = '/courses-screen';
-  const CoursesScreen({super.key});
+class SectionsScreen extends ConsumerWidget {
+  final int courseId;
+  static const String routeName = '/sections-screen';
+  const SectionsScreen(this.courseId, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,9 +44,9 @@ class CoursesScreen extends ConsumerWidget {
           )
         ],
       ),
-      body: FutureBuilder<List<CourseModel>>(
+      body: FutureBuilder<List<SectionModel>>(
         future:
-            ref.read(educationRepositoryProvider).getCourses(context: context),
+            ref.read(educationRepositoryProvider).getSections(context: context, courseId: courseId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.data != null) {
@@ -55,14 +55,10 @@ class CoursesScreen extends ConsumerWidget {
               child: ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  var course = snapshot.data![index];
+                  var section = snapshot.data![index];
                   return ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(SectionsScreen.routeName,
-                          arguments: {'courseId': course.id});
-                    },
-                    title: Text(course.name),
-                    subtitle: Text(course.description),
+                    title: Text(section.name),
+                    subtitle: Text(section.description),
                   );
                 },
               ),

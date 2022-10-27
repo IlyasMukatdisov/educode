@@ -1,14 +1,18 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class CourseModel {
+class SectionModel {
   final int id;
   final String name;
   final String description;
 
-  CourseModel({
+  SectionModel({
     required this.id,
     required this.name,
     required this.description,
   });
+
+  
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -18,11 +22,12 @@ class CourseModel {
     };
   }
 
-  factory CourseModel.fromMap(Map<String, dynamic> map) {
-    return CourseModel(
+  factory SectionModel.fromMap(Map<String, dynamic> map) {
+    return SectionModel(
       id: map['id'] as int,
       name: map['name'] as String,
       description: map['description'] as String,
     );
   }
+  
 }

@@ -6,6 +6,8 @@ import 'package:educode/features/auth/screens/reset_password_screen.dart';
 import 'package:educode/features/auth/screens/verify_email.dart';
 import 'package:educode/features/auth/screens/welcome_screen.dart';
 import 'package:educode/features/education/screens/courses_screen.dart';
+import 'package:educode/features/education/screens/sections_screen.dart';
+import 'package:educode/features/education/screens/test_screen.dart';
 import 'package:educode/utils/screens/error_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +36,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CoursesScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const CoursesScreen(),
+      );
+    case TestScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const TestScreen(),
+      );
+    case SectionsScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final int id = arguments['courseId'];
+      return MaterialPageRoute(
+        builder: (context) => SectionsScreen(id),
       );
     default:
       return MaterialPageRoute(
