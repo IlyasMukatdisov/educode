@@ -1,70 +1,129 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educode/features/education/models/course_model.dart';
+import 'package:educode/features/education/models/lesson_model.dart';
 import 'package:educode/features/education/models/section_model.dart';
-import 'package:educode/utils/constants.dart';
-import 'package:educode/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:educode/features/education/repository/firebase_education_repository.dart';
+import 'package:educode/features/education/repository/local_education_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final educationRepositoryProvider = Provider(
-  (ref) => EducationRepository(firestore: FirebaseFirestore.instance),
+  (ref) => EducationRepository(ref),
 );
 
 class EducationRepository {
-  final FirebaseFirestore firestore;
+  final ProviderRef ref;
 
-  EducationRepository({
-    required this.firestore,
-  });
+  EducationRepository(this.ref);
 
-  void setCourses(
-      {required List<CourseModel> courses,
-      required BuildContext context}) async {
-    try {
-      for (var course in courses) {
-        await firestore
-            .collection(coursesCollection)
-            .doc(course.id.toString())
-            .set(course.toMap());
-      }
-    } catch (e) {
-      showSnackBar(context: context, text: e.toString());
-    }
-  }
+  void setCourses({
+    required List<CourseModel> courses,
+    required BuildContext context,
+  }) async {}
 
   Future<List<CourseModel>> getCourses({required BuildContext context}) async {
-    List<CourseModel> courses = [];
-    try {
-      var snapshot = await firestore.collection(coursesCollection).get();
-      for (var doc in snapshot.docs) {
-        final course = CourseModel.fromMap(doc.data());
-        courses.add(course);
-      }
-    } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+    var local = await ref
+        .read(localEducationRepositoryProvider)
+        .getCourses(context: context);
+    if (local.isNotEmpty) {
+      return local;
+    } else {
+      var firebaseCourses = await ref
+          .read(firebaseEducationRepositoryProvider)
+          .getCourses(context: context);
+      await ref
+          .read(localEducationRepositoryProvider)
+          .setCourses(context: context, courses: firebaseCourses);
+      return firebaseCourses;
     }
-    return courses;
   }
 
   Future<List<SectionModel>> getSections({
     required BuildContext context,
     required int courseId,
   }) async {
-    List<SectionModel> sections = [];
-    try {
-      var snapshot = await firestore
-          .collection(coursesCollection)
-          .doc(courseId.toString())
-          .collection(sectionsCollection)
-          .get();
-      for (var doc in snapshot.docs) {
-        final section = SectionModel.fromMap(doc.data());
-        sections.add(section);
-      }
-    } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+    var local = await ref
+        .read(localEducationRepositoryProvider)
+        .getSections(context: context, courseId: courseId);
+    if (local.isNotEmpty) {
+      local.removeWhere((element) => element.courseId != courseId);
+      return local;
+    } else {
+      var firebaseSections =
+          await ref.read(firebaseEducationRepositoryProvider).getAllSections(
+                context: context,
+              );
+      await ref
+          .read(localEducationRepositoryProvider)
+          .setSections(context: context, sections: firebaseSections);
+      firebaseSections.removeWhere((element) => element.courseId != courseId);
+      return firebaseSections;
     }
-    return sections;
   }
+
+  Future<List<LessonModel>> getLessons({
+    required BuildContext context,
+    required int courseId,
+    required int sectionId,
+  }) async {
+    var local = await ref.read(localEducationRepositoryProvider).getLessons(
+          context: context,
+        );
+    if (local.isNotEmpty) {
+      local.removeWhere((element) =>
+          element.courseId != courseId || element.sectionId != sectionId);
+      return local;
+    } else {
+      var firebaseLessons =
+          await ref.read(firebaseEducationRepositoryProvider).getAllLessons(
+                context: context,
+              );
+      await ref
+          .read(localEducationRepositoryProvider)
+          .setLessons(context: context, lessons: firebaseLessons);
+      firebaseLessons.removeWhere((element) =>
+          element.courseId != courseId || element.sectionId != sectionId);
+      return firebaseLessons;
+    }
+  }
+
+  Future<LessonModel> getLesson(
+      {required BuildContext context,
+      required int courseId,
+      required int sectionId,
+      required int lessonId}) async {
+    final lessons = await getLessons(
+        context: context, courseId: courseId, sectionId: sectionId);
+    return lessons.firstWhere((element) =>
+        element.id == lessonId &&
+        element.courseId == courseId &&
+        element.sectionId == sectionId);
+  }
+
+  Future<void> setLesson({
+    required BuildContext context,
+    required int courseId,
+    required int sectionId,
+    required int lessonId,
+    required String name,
+    required String text,
+    required String codeExample,
+    required String codeLanguage,
+  }) async {
+    LessonModel lesson = LessonModel(
+        id: lessonId,
+        name: name,
+        text: text,
+        codeExample: codeExample,
+        courseId: courseId,
+        sectionId: sectionId,
+        codeLanguage: codeLanguage);
+  }
+
+  Future<void> updateLesson({
+    required BuildContext context,
+    required int courseId,
+    required int sectionId,
+    required int lessonId,
+    required String codeLanguage,
+  }) async {}
 }

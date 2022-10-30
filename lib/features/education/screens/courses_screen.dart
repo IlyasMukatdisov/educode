@@ -1,6 +1,5 @@
-import 'package:educode/features/auth/controller/auth_controller.dart';
-import 'package:educode/features/auth/screens/welcome_screen.dart';
 import 'package:educode/features/education/components/drawer.dart';
+import 'package:educode/features/education/components/popup_menu.dart';
 import 'package:educode/features/education/models/course_model.dart';
 import 'package:educode/features/education/repository/education_repository.dart';
 import 'package:educode/features/education/screens/sections_screen.dart';
@@ -17,32 +16,7 @@ class CoursesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Courses'),
-        actions: [
-          PopupMenuButton(
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  child: ListTile(
-                    minLeadingWidth: 0,
-                    title: const Text('Log out'),
-                    leading: const Icon(
-                      Icons.logout,
-                      color: Colors.black,
-                    ),
-                    onTap: () async {
-                      await ref
-                          .read(authControllerProvider)
-                          .logOut(context)
-                          .then((value) => Navigator.of(context)
-                              .pushNamedAndRemoveUntil(
-                                  WelcomeScreen.routeName, (route) => false));
-                    },
-                  ),
-                )
-              ];
-            },
-          )
-        ],
+        actions: const [PopupMenu()],
       ),
       body: FutureBuilder<List<CourseModel>>(
         future:
@@ -58,8 +32,10 @@ class CoursesScreen extends ConsumerWidget {
                   var course = snapshot.data![index];
                   return ListTile(
                     onTap: () {
-                      Navigator.of(context).pushNamed(SectionsScreen.routeName,
-                          arguments: {'courseId': course.id});
+                      Navigator.of(context)
+                          .pushNamed(SectionsScreen.routeName, arguments: {
+                        'courseId': course.id,
+                      });
                     },
                     title: Text(course.name),
                     subtitle: Text(course.description),

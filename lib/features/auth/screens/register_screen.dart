@@ -21,10 +21,6 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
   late final TextEditingController _password;
   late final TextEditingController _confirmPassword;
 
-  bool showEmailLabel = false;
-  bool showPasswordLabel = false;
-  bool showConfirmPasswordLabel = false;
-
   @override
   void initState() {
     _email = TextEditingController();
@@ -47,7 +43,7 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Register',
         ),
       ),
@@ -60,65 +56,45 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('assets/logo.png'),
+                  Image.asset('assets/logo_transparent.png'),
                   const SizedBox(
                     height: defaultPadding * 2,
                   ),
                   TextFormField(
                     autocorrect: false,
-                    onChanged: (value) {
-                      setState(() {
-                        showEmailLabel = value.isNotEmpty ? true : false;
-                      });
-                    },
                     controller: _email,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.email),
-                      labelText: showEmailLabel ? 'Email' : null,
-                      hintText: 'Email',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email),
+                      labelText: 'Email',
                     ),
                   ),
                   const SizedBox(
                     height: defaultPadding,
                   ),
                   TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        showPasswordLabel = value.isNotEmpty ? true : false;
-                      });
-                    },
                     controller: _password,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.password),
-                      labelText: showPasswordLabel ? 'Password' : null,
-                      hintText: 'Password',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.password),
+                      labelText: 'Password',
                     ),
                   ),
                   const SizedBox(
                     height: defaultPadding,
                   ),
                   TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        showConfirmPasswordLabel =
-                            value.isNotEmpty ? true : false;
-                      });
-                    },
                     controller: _confirmPassword,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.password),
-                      labelText:
-                          showConfirmPasswordLabel ? 'Confirm Password' : null,
-                      hintText: 'Confirm Password',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.password),
+                      labelText: 'Confirm Password',
                     ),
                   ),
                   const SizedBox(

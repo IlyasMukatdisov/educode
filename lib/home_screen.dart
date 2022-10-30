@@ -1,5 +1,4 @@
 import 'package:educode/features/auth/controller/auth_controller.dart';
-import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/features/auth/screens/verify_email.dart';
 import 'package:educode/features/auth/screens/welcome_screen.dart';
 import 'package:educode/features/education/screens/courses_screen.dart';
@@ -12,6 +11,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var currentUser = ref.watch(authControllerProvider).currentUser;
+
+      
     if (currentUser == null) {
       return const WelcomeScreen();
     } else {

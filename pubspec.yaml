@@ -42,6 +42,10 @@ dependencies:
   cloud_firestore: ^4.0.2
   intl: ^0.17.0
   flutter_riverpod: ^2.0.2
+  flutter_highlight: ^0.7.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  
     
   
 
@@ -55,6 +59,19 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  hive_generator: ^2.0.0
+  build_runner: ^2.3.2
+  flutter_launcher_icons: "^0.10.0"
+
+  
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/logo_transparent.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/logo_transparent.png"
 
 flutter_intl:
   enabled: true 
@@ -64,7 +81,6 @@ flutter_intl:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TestScreen extends ConsumerWidget {
-  static const String routeName = '/test-screen';
+  static const String routeName = '/tests-screen';
   const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lessons'),
+        title: const Text('Tests'),
         actions: [
           PopupMenuButton(
             itemBuilder: (context) {
@@ -23,7 +23,6 @@ class TestScreen extends ConsumerWidget {
                     title: const Text('Log out'),
                     leading: const Icon(
                       Icons.logout,
-                      color: Colors.black,
                     ),
                     onTap: () async {
                       await ref

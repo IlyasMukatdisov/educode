@@ -15,8 +15,6 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   late final TextEditingController _email;
 
-  bool showEmailLabel = false;
-
   @override
   void initState() {
     super.initState();
@@ -58,17 +56,11 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   ),
                   TextFormField(
                     autocorrect: false,
-                    onChanged: (value) {
-                      setState(() {
-                        showEmailLabel = value.isNotEmpty ? true : false;
-                      });
-                    },
                     controller: _email,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.email),
-                      labelText: showEmailLabel ? 'Email' : null,
-                      hintText: 'Email',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email),
+                      labelText: 'Email',
                     ),
                   ),
                   const SizedBox(

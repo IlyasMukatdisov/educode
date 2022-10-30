@@ -1,7 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class CourseModel {
+
+import 'package:educode/utils/constants.dart';
+import 'package:hive/hive.dart';
+
+part 'course_model.g.dart';
+
+@HiveType(typeId: courseModelId)
+class CourseModel extends HiveObject {
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final String description;
 
   CourseModel({
