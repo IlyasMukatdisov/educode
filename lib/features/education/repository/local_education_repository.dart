@@ -30,6 +30,12 @@ class LocalEducationRepository {
     lessonsBox = await Hive.openBox(lessonsCollection);
   }
 
+  Future<void> clear() async {
+    await coursesBox.clear();
+    await sectionsBox.clear();
+    await lessonsBox.clear(); 
+  }
+
   Future<void> setCourses({
     required List<CourseModel> courses,
     required BuildContext context,

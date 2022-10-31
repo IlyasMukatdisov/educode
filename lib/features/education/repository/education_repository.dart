@@ -30,9 +30,23 @@ class EducationRepository {
       var firebaseCourses = await ref
           .read(firebaseEducationRepositoryProvider)
           .getCourses(context: context);
+      var firebaseSections = await ref
+          .read(firebaseEducationRepositoryProvider)
+          .getAllSections(context: context);
+
+      var firebaseLessons = await ref
+          .read(firebaseEducationRepositoryProvider)
+          .getAllLessons(context: context);
+
       await ref
           .read(localEducationRepositoryProvider)
           .setCourses(context: context, courses: firebaseCourses);
+      await ref
+          .read(localEducationRepositoryProvider)
+          .setSections(context: context, sections: firebaseSections);
+      await ref
+          .read(localEducationRepositoryProvider)
+          .setLessons(context: context, lessons: firebaseLessons);
       return firebaseCourses;
     }
   }
