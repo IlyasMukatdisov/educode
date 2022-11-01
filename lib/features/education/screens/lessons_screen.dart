@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:educode/features/education/components/drawer.dart';
-import 'package:educode/features/education/repository/firebase_education_repository.dart';
 
 class LessonsScreen extends ConsumerWidget {
   final int courseId;

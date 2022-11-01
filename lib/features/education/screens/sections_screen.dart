@@ -15,7 +15,7 @@ class SectionsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Courses'),
+        title: const Text('Sections'),
         actions: const [PopupMenu()],
       ),
       body: FutureBuilder<List<SectionModel>>(

@@ -24,19 +24,31 @@ class EducationRepository {
     var local = await ref
         .read(localEducationRepositoryProvider)
         .getCourses(context: context);
+
     if (local.isNotEmpty) {
       return local;
     } else {
       var firebaseCourses = await ref
           .read(firebaseEducationRepositoryProvider)
           .getCourses(context: context);
+      firebaseCourses.sort(
+        (a, b) => a.id.compareTo(b.id),
+      );
       var firebaseSections = await ref
           .read(firebaseEducationRepositoryProvider)
           .getAllSections(context: context);
 
+      firebaseSections.sort(
+        (a, b) => a.id.compareTo(b.id),
+      );
+
       var firebaseLessons = await ref
           .read(firebaseEducationRepositoryProvider)
           .getAllLessons(context: context);
+
+      firebaseLessons.sort(
+        (a, b) => a.id.compareTo(b.id),
+      );
 
       await ref
           .read(localEducationRepositoryProvider)

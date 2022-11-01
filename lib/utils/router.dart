@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/features/auth/screens/register_screen.dart';

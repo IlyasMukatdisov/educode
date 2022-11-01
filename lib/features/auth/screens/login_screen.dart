@@ -52,7 +52,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('assets/logo_transparent.png'),
+                  Image.asset('assets/logo_transparent.png',
+                      height: size.height * 0.25),
                   const SizedBox(
                     height: defaultPadding * 2,
                   ),
