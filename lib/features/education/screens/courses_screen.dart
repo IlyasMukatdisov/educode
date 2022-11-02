@@ -24,24 +24,21 @@ class CoursesScreen extends ConsumerWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.data != null) {
-            return Container(
-              padding: const EdgeInsets.only(top: defaultPadding),
-              child: ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  var course = snapshot.data![index];
-                  return ListTile(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SectionsScreen.routeName, arguments: {
-                        'courseId': course.id,
-                      });
-                    },
-                    title: Text(course.name),
-                    subtitle: Text(course.description),
-                  );
-                },
-              ),
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                var course = snapshot.data![index];
+                return ListTile(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(SectionsScreen.routeName, arguments: {
+                      'courseId': course.id,
+                    });
+                  },
+                  title: Text(course.name),
+                  subtitle: Text(course.description),
+                );
+              },
             );
           } else {
             return const Center(

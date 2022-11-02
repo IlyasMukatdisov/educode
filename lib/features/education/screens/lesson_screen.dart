@@ -57,7 +57,7 @@ class LessonScreen extends ConsumerWidget {
                     ),
                     Text(
                       lesson.text,
-                      textAlign: TextAlign.justify,
+                      textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     SizedBox(

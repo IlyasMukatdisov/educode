@@ -168,6 +168,9 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
                   },
                   child: const Text('Set Lesson'),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     await ref.read(localEducationRepositoryProvider).clear();
