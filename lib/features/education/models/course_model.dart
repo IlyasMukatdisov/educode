@@ -1,11 +1,11 @@
+import 'package:hive/hive.dart';
 
 import 'package:educode/utils/constants.dart';
-import 'package:hive/hive.dart';
 
 part 'course_model.g.dart';
 
 @HiveType(typeId: courseModelId)
-class CourseModel extends HiveObject {
+class CourseModel {
   @HiveField(0)
   final int id;
 
@@ -15,10 +15,14 @@ class CourseModel extends HiveObject {
   @HiveField(2)
   final String description;
 
+  @HiveField(3)
+  final String imagePath;
+
   CourseModel({
     required this.id,
     required this.name,
     required this.description,
+    required this.imagePath,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +30,7 @@ class CourseModel extends HiveObject {
       'id': id,
       'name': name,
       'description': description,
+      'imagePath': imagePath,
     };
   }
 
@@ -34,6 +39,7 @@ class CourseModel extends HiveObject {
       id: map['id'] as int,
       name: map['name'] as String,
       description: map['description'] as String,
+      imagePath: map['imagePath'] as String,
     );
   }
 }

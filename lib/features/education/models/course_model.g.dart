@@ -20,19 +20,22 @@ class CourseModelAdapter extends TypeAdapter<CourseModel> {
       id: fields[0] as int,
       name: fields[1] as String,
       description: fields[2] as String,
+      imagePath: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CourseModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(3)
+      ..write(obj.imagePath);
   }
 
   @override

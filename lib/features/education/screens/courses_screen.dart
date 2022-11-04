@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:educode/features/education/components/drawer.dart';
 import 'package:educode/features/education/components/popup_menu.dart';
 import 'package:educode/features/education/models/course_model.dart';
@@ -37,6 +38,12 @@ class CoursesScreen extends ConsumerWidget {
                   },
                   title: Text(course.name),
                   subtitle: Text(course.description),
+                  style: ListTileStyle.list,
+                  leading: CachedNetworkImage(
+                    imageUrl: course.imagePath,
+                    height: 40,
+                    width: 40,
+                  ),
                 );
               },
             );
