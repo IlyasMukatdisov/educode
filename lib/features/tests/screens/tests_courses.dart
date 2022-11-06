@@ -3,20 +3,19 @@ import 'package:educode/utils/screens/components/drawer.dart';
 import 'package:educode/utils/screens/components/popup_menu.dart';
 import 'package:educode/features/education/models/course_model.dart';
 import 'package:educode/features/education/repository/education_repository.dart';
-import 'package:educode/features/education/screens/sections_screen.dart';
-import 'package:educode/utils/constants.dart';
+import 'package:educode/features/tests/screens/test_sections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CoursesScreen extends ConsumerWidget {
-  static const String routeName = '/courses-screen';
-  const CoursesScreen({super.key});
+class CoursesTestsScreen extends ConsumerWidget {
+  static const String routeName = '/courses-tests-screen';
+  const CoursesTestsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Courses'),
+        title: const Text('Tests'),
         actions: const [PopupMenu()],
       ),
       body: FutureBuilder<List<CourseModel>>(
@@ -32,12 +31,11 @@ class CoursesScreen extends ConsumerWidget {
                 return ListTile(
                   onTap: () {
                     Navigator.of(context)
-                        .pushNamed(SectionsScreen.routeName, arguments: {
+                        .pushNamed(SectionsTestsScreen.routeName, arguments: {
                       'courseId': course.id,
                     });
                   },
                   title: Text(course.name),
-                  subtitle: Text(course.description),
                   style: ListTileStyle.list,
                   leading: CachedNetworkImage(
                     imageUrl: course.imagePath,

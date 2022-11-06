@@ -1,48 +1,43 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:educode/utils/screens/components/drawer.dart';
 import 'package:educode/utils/screens/components/popup_menu.dart';
-import 'package:educode/features/education/models/lesson_model.dart';
+import 'package:educode/features/education/models/section_model.dart';
 import 'package:educode/features/education/repository/education_repository.dart';
-import 'package:educode/features/education/screens/lesson_screen.dart';
+import 'package:educode/features/tests/screens/tests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:educode/utils/screens/components/drawer.dart';
-
-class LessonsScreen extends ConsumerWidget {
+class SectionsTestsScreen extends ConsumerWidget {
   final int courseId;
-  final int sectionId;
-
-  const LessonsScreen(
-      {required this.courseId, required this.sectionId, super.key});
-  static const String routeName = '/lessons-screen';
+  static const String routeName = '/sections-tests-screen';
+  const SectionsTestsScreen(this.courseId, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lessons'),
+        title: const Text('Tests'),
         actions: const [PopupMenu()],
       ),
-      body: FutureBuilder<List<LessonModel>>(
-        future: ref.read(educationRepositoryProvider).getLessons(
-            context: context, courseId: courseId, sectionId: sectionId),
+      body: FutureBuilder<List<SectionModel>>(
+        future: ref
+            .read(educationRepositoryProvider)
+            .getSections(context: context, courseId: courseId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.data != null) {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                var lesson = snapshot.data![index];
+                var section = snapshot.data![index];
                 return ListTile(
                   onTap: () {
-                    Navigator.pushNamed(context, LessonScreen.routeName,
+                    Navigator.pushNamed(context, TestsScreen.routeName,
                         arguments: {
                           'courseId': courseId,
-                          'sectionId': sectionId,
-                          'lessonId': lesson.id
+                          'sectionId': section.id
                         });
                   },
-                  title: Text(lesson.name),
+                  title: Text(section.name),
                 );
               },
             );

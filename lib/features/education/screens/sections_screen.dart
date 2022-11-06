@@ -1,5 +1,5 @@
-import 'package:educode/features/education/components/drawer.dart';
-import 'package:educode/features/education/components/popup_menu.dart';
+import 'package:educode/utils/screens/components/drawer.dart';
+import 'package:educode/utils/screens/components/popup_menu.dart';
 import 'package:educode/features/education/models/section_model.dart';
 import 'package:educode/features/education/repository/education_repository.dart';
 import 'package:educode/features/education/screens/lessons_screen.dart';

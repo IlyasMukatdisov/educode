@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:educode/features/education/screens/tests_screen.dart';
+import 'package:educode/features/tests/screens/tests_courses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,7 +61,7 @@ class DrawerContent extends ConsumerWidget {
                 ),
                 onTap: () {
                   Navigator.pushReplacementNamed(
-                      context, TestScreen.routeName);
+                      context, CoursesTestsScreen.routeName);
                 },
               ),
             ],

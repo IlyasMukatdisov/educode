@@ -1,4 +1,3 @@
-
 import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
@@ -9,7 +8,9 @@ import 'package:educode/features/education/screens/debug_screen.dart';
 import 'package:educode/features/education/screens/lesson_screen.dart';
 import 'package:educode/features/education/screens/lessons_screen.dart';
 import 'package:educode/features/education/screens/sections_screen.dart';
-import 'package:educode/features/education/screens/tests_screen.dart';
+import 'package:educode/features/tests/screens/test_sections.dart';
+import 'package:educode/features/tests/screens/tests_courses.dart';
+import 'package:educode/features/tests/screens/tests_screen.dart';
 import 'package:educode/utils/screens/error_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +40,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CoursesScreen(),
       );
-    case TestScreen.routeName:
+    case CoursesTestsScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const TestScreen(),
+        builder: (context) => const CoursesTestsScreen(),
       );
     case DebugScreen.routeName:
       return MaterialPageRoute(
@@ -53,12 +54,28 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => SectionsScreen(id),
       );
+    case SectionsTestsScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final int id = arguments['courseId'];
+      return MaterialPageRoute(
+        builder: (context) => SectionsTestsScreen(id),
+      );
     case LessonsScreen.routeName:
       final arguments = settings.arguments as Map<String, dynamic>;
       final int courseId = arguments['courseId'];
       final int sectionId = arguments['sectionId'];
       return MaterialPageRoute(
         builder: (context) => LessonsScreen(
+          courseId: courseId,
+          sectionId: sectionId,
+        ),
+      );
+    case TestsScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final int courseId = arguments['courseId'];
+      final int sectionId = arguments['sectionId'];
+      return MaterialPageRoute(
+        builder: (context) => TestsScreen(
           courseId: courseId,
           sectionId: sectionId,
         ),

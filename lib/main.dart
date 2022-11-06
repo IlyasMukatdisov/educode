@@ -2,6 +2,8 @@ import 'package:educode/features/education/models/course_model.dart';
 import 'package:educode/features/education/models/lesson_model.dart';
 import 'package:educode/features/education/models/section_model.dart';
 import 'package:educode/features/education/repository/local_education_repository.dart';
+import 'package:educode/features/tests/screens/debug_test.dart';
+import 'package:educode/features/tests/screens/tests_courses.dart';
 import 'package:educode/generated/l10n.dart';
 import 'package:educode/home_screen.dart';
 import 'package:educode/utils/router.dart';
