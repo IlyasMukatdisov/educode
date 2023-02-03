@@ -6,15 +6,15 @@ class Question {
   final int courseId;
   final int sectionId;
   final String title;
-  final Map<String, bool> options;
-
-  Question({
-    required this.id,
-    required this.courseId,
-    required this.sectionId,
-    required this.title,
-    required this.options,
-  });
+  final List<String> answers;
+  final String correctAnswer;
+  Question(
+      {required this.id,
+      required this.courseId,
+      required this.sectionId,
+      required this.title,
+      required this.answers,
+      required this.correctAnswer});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -22,19 +22,25 @@ class Question {
       'courseId': courseId,
       'sectionId': sectionId,
       'title': title,
-      'options': options,
+      'answers': answers,
+      'correctAnswer': correctAnswer,
     };
   }
 
   factory Question.fromMap(Map<String, dynamic> map) {
     return Question(
-      id: map['id'] as int,
-      courseId: map['courseId'] as int,
-      sectionId: map['sectionId'] as int,
-      title: map['title'] as String,
-      options: Map<String, bool>.from(map['options'] ),
-    );
+        id: map['id'] as int,
+        courseId: map['courseId'] as int,
+        sectionId: map['sectionId'] as int,
+        title: map['title'] as String,
+        answers: List<String>.from((map['answers'])
+          ..add(map['correctAnswer'] as String)
+          ..shuffle()),
+        correctAnswer: map['correctAnswer'] as String);
   }
 
-  
+  String toJson() => json.encode(toMap());
+
+  factory Question.fromJson(String source) =>
+      Question.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -80,14 +80,14 @@ class _TestsScreenState extends ConsumerState<TestsScreen> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: test.options.length,
+                        itemCount: test.answers.length,
                         itemBuilder: (context, index) {
                           return ListTile(
                             onTap: () {
                               optionPicked = index;
                             },
                             title: Text(
-                              "${index + 1}) ${test.options.keys.elementAt(index)}",
+                              "${index + 1}) ${test.answers[index]}",
                             ),
                           );
                         },

@@ -21,14 +21,16 @@ class TestsRepository {
       required String courseId,
       required String sectionId,
       required String title,
-      required Map<String, bool> options}) async {
+      required List<String> answers,
+      required String correctAnswer}) async {
     try {
       Question question = Question(
           id: int.parse(questionId),
           courseId: int.parse(courseId),
           sectionId: int.parse(sectionId),
           title: title,
-          options: options);
+          answers: answers,
+          correctAnswer: correctAnswer);
 
       firebaseFirestore
           .collection(coursesCollection)
@@ -57,6 +59,7 @@ class TestsRepository {
           .collection(testsCollection)
           .get();
       for (var doc in snapshot.docs) {
+        debugPrint(doc.data().toString());
         tests.add(Question.fromMap(doc.data()));
       }
     } catch (e) {
