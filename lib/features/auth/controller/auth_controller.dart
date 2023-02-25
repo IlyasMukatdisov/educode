@@ -20,16 +20,16 @@ class AuthController {
 
   User? get currentUser => repository.currentUser;
 
-  Future<void> createUser({
+  Future<int> createUser({
     required String email,
     required String password,
     required BuildContext context,
   }) =>
       repository.createUser(email: email, password: password, context: context);
 
-  Future<void> logOut(BuildContext context) => repository.logOut(context);
+  Future<int> logOut(BuildContext context) => repository.logOut(context);
 
-  Future<void> signInWithEmailAndPassword({
+  Future<int> signInWithEmailAndPassword({
     required String email,
     required String password,
     required BuildContext context,
@@ -37,10 +37,10 @@ class AuthController {
       repository.signInWithEmailAndPassword(
           email: email, password: password, context: context);
 
-  Future<void> sendEmailVerification(BuildContext context) =>
+  Future<int> sendEmailVerification(BuildContext context) =>
       repository.sendEmailVerification(context);
 
-  Future<void> sendPasswordReset({
+  Future<int> sendPasswordReset({
     required String toEmail,
     required BuildContext context,
   }) =>

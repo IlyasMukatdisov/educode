@@ -1,17 +1,20 @@
+import 'package:educode/features/auth/screens/account_screen.dart';
+import 'package:educode/features/courses/arguments/course_arguments.dart';
+import 'package:educode/features/courses/screens/detail/course_details_screen.dart';
+import 'package:educode/features/courses/screens/home/courses_home_screen.dart';
+import 'package:educode/features/my_courses/screens/my_courses_screen.dart';
+import 'package:educode/features/shopping/arguments/checkout_arguments.dart';
+import 'package:educode/features/shopping/screens/checkout_screen.dart';
+import 'package:educode/features/shopping/screens/shopping_cart_screen.dart';
+import 'package:educode/features/courses/screens/wishlist/wishlist_screen.dart';
 import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
 import 'package:educode/features/auth/screens/verify_email.dart';
-import 'package:educode/features/auth/screens/welcome_screen.dart';
-import 'package:educode/features/education/screens/courses_screen.dart';
-import 'package:educode/features/education/screens/debug_screen.dart';
-import 'package:educode/features/education/screens/lesson_screen.dart';
-import 'package:educode/features/education/screens/lessons_screen.dart';
-import 'package:educode/features/education/screens/sections_screen.dart';
-import 'package:educode/features/tests/screens/test_sections.dart';
-import 'package:educode/features/tests/screens/tests_courses.dart';
-import 'package:educode/features/tests/screens/tests_screen.dart';
+
+import 'package:educode/utils/route_names.dart';
 import 'package:educode/utils/screens/error_screen.dart';
+
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -32,66 +35,42 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const VerifyEmailScreen(),
       );
-    case WelcomeScreen.routeName:
+
+    case RouteNames.coursesHome:
       return MaterialPageRoute(
-        builder: (context) => const WelcomeScreen(),
+        builder: (context) => const CoursesHomeScreen(),
       );
-    case CoursesScreen.routeName:
+    case RouteNames.shoppingCart:
       return MaterialPageRoute(
-        builder: (context) => const CoursesScreen(),
+        builder: (context) => const ShoppingCartScreen(),
       );
-    case CoursesTestsScreen.routeName:
+    case RouteNames.myCourses:
       return MaterialPageRoute(
-        builder: (context) => const CoursesTestsScreen(),
+        builder: (context) => const MyCoursesScreen(),
       );
-    case DebugScreen.routeName:
+    case RouteNames.wishlist:
       return MaterialPageRoute(
-        builder: (context) => const DebugScreen(),
+        builder: (context) => const WishlistScreen(),
       );
-    case SectionsScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final int id = arguments['courseId'];
+    case RouteNames.account:
       return MaterialPageRoute(
-        builder: (context) => SectionsScreen(id),
+        builder: (context) => const AccountScreen(),
       );
-    case SectionsTestsScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final int id = arguments['courseId'];
-      return MaterialPageRoute(
-        builder: (context) => SectionsTestsScreen(id),
-      );
-    case LessonsScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final int courseId = arguments['courseId'];
-      final int sectionId = arguments['sectionId'];
-      return MaterialPageRoute(
-        builder: (context) => LessonsScreen(
-          courseId: courseId,
-          sectionId: sectionId,
-        ),
-      );
-    case TestsScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final int courseId = arguments['courseId'];
-      final int sectionId = arguments['sectionId'];
-      return MaterialPageRoute(
-        builder: (context) => TestsScreen(
-          courseId: courseId,
-          sectionId: sectionId,
-        ),
-      );
-    case LessonScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final int courseId = arguments['courseId'];
-      final int sectionId = arguments['sectionId'];
-      final int lessonId = arguments['lessonId'];
-      return MaterialPageRoute(
-        builder: (context) => LessonScreen(
-          courseId: courseId,
-          sectionId: sectionId,
-          lessonId: lessonId,
-        ),
-      );
+    case RouteNames.courseDetails:
+      {
+        final args = settings.arguments as CourseArguments;
+        return MaterialPageRoute(
+          builder: (context) => CoursesDetailsScreen(course: args.course),
+        );
+      }
+    case RouteNames.checkout:
+      {
+        final args = settings.arguments as CheckoutArguments;
+        return MaterialPageRoute(
+          builder: (context) => CheckoutScreen(
+              courseList: args.courseList, totalPrice: args.totalPrice),
+        );
+      }
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(

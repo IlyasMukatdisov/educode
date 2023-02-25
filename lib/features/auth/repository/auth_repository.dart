@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:educode/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,7 @@ class AuthRepository {
 
   User? get currentUser => auth.currentUser;
 
-  Future<void> createUser({
+  Future<int> createUser({
     required String email,
     required String password,
     required BuildContext context,
@@ -30,31 +28,36 @@ class AuthRepository {
       );
       final user = currentUser;
       if (user != null) {
-        return;
+        return 0;
       } else {
         throw FirebaseAuthException(code: 'operation-not-allowed');
       }
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, text: e.message ?? "Can't create user");
+      Utils.showMessage(
+          context: context, message: e.message ?? "Can't create user");
+      return 1;
     } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+      Utils.showMessage(context: context, message: e.toString());
+      return 1;
     }
   }
 
-  Future<void> logOut(BuildContext context) async {
+  Future<int> logOut(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
       if (user != null) {
         await FirebaseAuth.instance.signOut();
+        return 0;
       } else {
         throw Exception('User not signed in');
       }
     } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+      Utils.showMessage(context: context, message: e.toString());
+      return 1;
     }
   }
 
-  Future<void> signInWithEmailAndPassword({
+  Future<int> signInWithEmailAndPassword({
     required String email,
     required String password,
     required BuildContext context,
@@ -62,38 +65,45 @@ class AuthRepository {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       if (currentUser != null) {
-        return;
+        return 0;
       } else {
         throw FirebaseAuthException(code: 'user-not-found');
       }
     } on FirebaseAuthException catch (e) {
-      showSnackBar(text: e.message ?? "Can't sign in", context: context);
+      Utils.showMessage(
+          message: e.message ?? "Can't sign in", context: context);
+      return 1;
     }
   }
 
-  Future<void> sendEmailVerification(BuildContext context) async {
+  Future<int> sendEmailVerification(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
       if (user != null) {
         await user.sendEmailVerification();
+        return 0;
       } else {
         throw Exception('User not logged in');
       }
     } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+      Utils.showMessage(context: context, message: e.toString());
+      return 1;
     }
   }
 
-  Future<void> sendPasswordReset(
+  Future<int> sendPasswordReset(
       {required String toEmail, required BuildContext context}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: toEmail);
+      return 0;
     } on FirebaseAuthException catch (e) {
-      showSnackBar(
+      Utils.showMessage(
           context: context,
-          text: e.message ?? "Can't send password reset to your email");
+          message: e.message ?? "Can't send password reset to your email");
+      return 1;
     } catch (e) {
-      showSnackBar(context: context, text: e.toString());
+      Utils.showMessage(context: context, message: e.toString());
+      return 1;
     }
   }
 }

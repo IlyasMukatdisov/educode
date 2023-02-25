@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:educode/features/auth/controller/auth_controller.dart';
 import 'package:educode/features/auth/screens/verify_email.dart';
 import 'package:educode/utils/constants.dart';
@@ -41,34 +38,39 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Register',
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Register',
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Center(
-            child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
                 children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
                   Image.asset(
-                    'assets/logo_transparent.png',
+                    'assets/images/logo/logo_transparent.png',
                     height: size.height * 0.25,
                   ),
                   const SizedBox(
                     height: defaultPadding * 2,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     autocorrect: false,
                     controller: _email,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder().copyWith(
+                          borderSide: const BorderSide(color: kPrimaryColor)),
+                      prefixIcon: const Icon(Icons.email),
                       labelText: 'Email',
                     ),
                   ),
@@ -76,13 +78,15 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
                     height: defaultPadding,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     controller: _password,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.password),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder().copyWith(
+                          borderSide: const BorderSide(color: kPrimaryColor)),
+                      prefixIcon: const Icon(Icons.password),
                       labelText: 'Password',
                     ),
                   ),
@@ -90,13 +94,15 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
                     height: defaultPadding,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     controller: _confirmPassword,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.password),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder().copyWith(
+                          borderSide: const BorderSide(color: kPrimaryColor)),
+                      prefixIcon: const Icon(Icons.password),
                       labelText: 'Confirm Password',
                     ),
                   ),
@@ -118,18 +124,23 @@ class _LoginScreenState extends ConsumerState<RegisterScreen> {
                                   context: context)
                               .then(
                             (value) async {
-                              await ref
-                                  .read(authControllerProvider)
-                                  .sendEmailVerification(context)
-                                  .then(
-                                    (value) => Navigator.of(context)
-                                        .pushNamed(VerifyEmailScreen.routeName),
-                                  );
+                              value == 0
+                                  ? await ref
+                                      .read(authControllerProvider)
+                                      .sendEmailVerification(context)
+                                      .then(
+                                        (value) => value == 0
+                                            ? Navigator.of(context).pushNamed(
+                                                VerifyEmailScreen.routeName)
+                                            : null,
+                                      )
+                                  : null;
                             },
                           );
                         } else {
-                          showSnackBar(
-                              context: context, text: "Passwords don't match");
+                          Utils.showMessage(
+                              context: context,
+                              message: "Passwords don't match");
                         }
                       },
                       child: const Text(

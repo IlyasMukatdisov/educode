@@ -1,8 +1,8 @@
 import 'package:educode/features/auth/controller/auth_controller.dart';
 import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
-import 'package:educode/features/education/screens/courses_screen.dart';
 import 'package:educode/utils/constants.dart';
+import 'package:educode/utils/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,27 +37,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Login',
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Center(
-            child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Image.asset('assets/logo_transparent.png',
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Image.asset('assets/images/logo/logo_transparent.png',
                       height: size.height * 0.25),
                   const SizedBox(
                     height: defaultPadding * 2,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     autocorrect: false,
                     controller: _email,
                     decoration: const InputDecoration(
@@ -70,6 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     height: defaultPadding,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     controller: _password,
                     obscureText: true,
                     enableSuggestions: false,
@@ -95,10 +95,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 password: _password.text.trim(),
                                 context: context)
                             .then(
-                              (value) => Navigator.of(context)
-                                  .pushNamedAndRemoveUntil(
-                                      CoursesScreen.routeName,
-                                      (route) => false),
+                              (value) => value == 0
+                                  ? Navigator.of(context)
+                                      .pushNamedAndRemoveUntil(
+                                          RouteNames.coursesHome,
+                                          (route) => false)
+                                  : null,
                             );
                       },
                       child: const Text(

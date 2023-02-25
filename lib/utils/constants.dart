@@ -2,17 +2,7 @@ import 'package:flutter/material.dart';
 
 const double defaultPadding = 16.0;
 
-const coursesCollection = 'courses';
-const sectionsCollection = 'sections';
-const lessonsCollection = 'lessons';
-const testsCollection = 'tests';
-
-const courseModelId = 1;
-const sectionModelId = 2;
-const lessonModelId = 3;
-
-const educationHiveCollection = 'educationHiveCollection';
-
-const correctAnswer = Color.fromARGB(255, 50, 158, 86);
-const incorrectColor = Color.fromARGB(0, 212, 29, 29);
-const neutralColor = Color.fromARGB(0, 161, 148, 148);
+const Color kPrimaryColor = Color(0xff00A9B8);
+const Color kOptionColor = Color(0xff008792);
+const Color kRatingColor = Color(0xffFFCD4D);
+const Color kBlueColor = Colors.blue;

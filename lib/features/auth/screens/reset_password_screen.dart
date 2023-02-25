@@ -31,17 +31,17 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Restore password',
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Restore password',
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Center(
-            child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -55,11 +55,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     height: defaultPadding * 2,
                   ),
                   TextFormField(
+                    cursorColor: kPrimaryColor,
                     autocorrect: false,
                     controller: _email,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder().copyWith(
+                          borderSide: const BorderSide(color: kPrimaryColor)),
+                      prefixIcon: const Icon(Icons.email),
                       labelText: 'Email',
                     ),
                   ),
