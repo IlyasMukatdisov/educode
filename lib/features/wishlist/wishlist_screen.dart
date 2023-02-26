@@ -1,7 +1,6 @@
-
 import 'package:educode/features/courses/components/bottom_option.dart';
 import 'package:educode/features/courses/components/shopping_cart_option.dart';
-import 'package:educode/features/courses/screens/wishlist/widget/wishlist.dart';
+import 'package:educode/features/wishlist/widget/wishlist.dart';
 import 'package:flutter/material.dart';
 
 class WishlistScreen extends StatelessWidget {

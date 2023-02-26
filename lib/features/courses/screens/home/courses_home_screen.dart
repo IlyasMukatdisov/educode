@@ -46,10 +46,10 @@ class CoursesHomeScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Column(
-                    children: [
-                      const Offers(),
+                    children: const [
+                      Offers(),
                       FeaturedCourses(),
-                      const CategoryCourseList()
+                      CategoryCourseList()
                     ],
                   ),
                 ),

@@ -7,4 +7,5 @@ class RouteNames {
   static const String myCourses = '/my-courses';
   static const String wishlist = '/wishlist';
   static const String account = '/account';
+  static const String debug = '/debug';
 }

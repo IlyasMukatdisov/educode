@@ -1,3 +1,4 @@
+import 'package:educode/debug/screens/debug_screen.dart';
 import 'package:educode/features/auth/screens/account_screen.dart';
 import 'package:educode/features/courses/arguments/course_arguments.dart';
 import 'package:educode/features/courses/screens/detail/course_details_screen.dart';
@@ -6,7 +7,7 @@ import 'package:educode/features/my_courses/screens/my_courses_screen.dart';
 import 'package:educode/features/shopping/arguments/checkout_arguments.dart';
 import 'package:educode/features/shopping/screens/checkout_screen.dart';
 import 'package:educode/features/shopping/screens/shopping_cart_screen.dart';
-import 'package:educode/features/courses/screens/wishlist/wishlist_screen.dart';
+import 'package:educode/features/wishlist/wishlist_screen.dart';
 import 'package:educode/features/auth/screens/login_screen.dart';
 import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
@@ -55,6 +56,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteNames.account:
       return MaterialPageRoute(
         builder: (context) => const AccountScreen(),
+      );
+    case RouteNames.debug:
+      return MaterialPageRoute(
+        builder: (context) => const DebugScreen(),
       );
     case RouteNames.courseDetails:
       {

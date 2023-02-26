@@ -1,39 +1,50 @@
-import 'package:educode/features/courses/provider/course_data_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:educode/features/wishlist/repository/wishlist_repository.dart';
 import 'package:educode/model/course.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WishList extends StatefulWidget {
+class WishList extends ConsumerStatefulWidget {
   const WishList({super.key});
 
   @override
-  State<WishList> createState() => _WishListState();
+  ConsumerState<WishList> createState() => _WishListState();
 }
 
-class _WishListState extends State<WishList> {
+class _WishListState extends ConsumerState<WishList> {
   @override
   Widget build(BuildContext context) {
-    List<Course> courseList = getCourseList(context);
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: courseList.length,
-      itemBuilder: (context, index) {
-        Course course = courseList[index];
-        return getListItem(course);
+    return FutureBuilder(
+      future: getCourseList(context),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            var courseList = snapshot.data!;
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: courseList.length,
+              itemBuilder: (context, index) {
+                Course course = courseList[index];
+                return getListItem(course);
+              },
+            );
+          }
+          return Container();
+        }
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  List<Course> getCourseList(BuildContext context) {
-    return CourseDataProvider.courseList
-        .where((course) => course.isFavorite)
-        .toList();
+  Future<List<Course>> getCourseList(BuildContext context) async {
+    return ref.read(wishlistRepositoryProvider).getCourses(context: context);
   }
 
   Widget getListItem(Course course) {
     return Card(
       child: ListTile(
-        leading: Image.asset(course.thumbnailUrl),
+        leading: CachedNetworkImage(imageUrl: course.thumbnailUrl),
         title: Text(
           course.title,
           maxLines: 2,
@@ -106,7 +117,9 @@ class _WishListState extends State<WishList> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      course.isFavorite = false;
+                      ref
+                          .read(wishlistRepositoryProvider)
+                          .deleteCourse(course: course, context: context);
                     });
                   },
                   child: const Icon(Icons.delete),

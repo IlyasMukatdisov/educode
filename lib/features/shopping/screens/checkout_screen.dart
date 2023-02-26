@@ -1,4 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csc_picker/csc_picker.dart';
+import 'package:educode/features/my_courses/repository/my_courses_repository.dart';
+import 'package:educode/features/shopping/repository/shopping_cart_repository.dart';
+import 'package:educode/model/my_course.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:educode/features/my_courses/provider/my_course_data_provider.dart';
 import 'package:educode/features/shopping/provider/shopping_cart_data_provider.dart';
@@ -7,8 +11,9 @@ import 'package:educode/features/shopping/screens/widget/payment_methods.dart';
 import 'package:educode/utils/route_names.dart';
 import 'package:educode/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends ConsumerWidget {
   const CheckoutScreen({
     super.key,
     required this.courseList,
@@ -19,8 +24,28 @@ class CheckoutScreen extends StatelessWidget {
 
   final double totalPrice;
 
+  Future<int> checkout(WidgetRef ref, BuildContext context) async {
+    List<MyCourse> myCourses = [];
+    for (var course in courseList) {
+      myCourses.add(
+        MyCourse(course, 0),
+      );
+    }
+
+    int result = await ref
+        .read(myCoursesRepositoryProvider)
+        .addCourses(myCourses: myCourses, context: context);
+    return result;
+  }
+
+  void cleanCart(WidgetRef ref, BuildContext context) {
+    ref
+        .read(firebaseShoppingCartRepositoryProvider)
+        .clearCart(context: context);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -40,16 +65,25 @@ class CheckoutScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
-                onPressed: () {
-                  MyCourseDataProvider.addAllCourses(courseList);
-                  ShoppingClassDataProvider.clearCart();
-
-                  Utils.showMessage(
-                    context: context,
-                    message: 'Your order is placed successfully',
-                  );
-
-                  Navigator.pushNamed(context, RouteNames.coursesHome);
+                onPressed: () async {
+                  int result = await checkout(ref, context);
+                  if (result == 0) {
+                    if (context.mounted) {
+                      cleanCart(ref, context);
+                      Utils.showMessage(
+                        context: context,
+                        message: 'Your order is placed successfully',
+                      );
+                      Navigator.pushNamed(context, RouteNames.coursesHome);
+                    }
+                  } else {
+                    if (context.mounted) {
+                      Utils.showMessage(
+                        context: context,
+                        message: 'Something went wrong! Please try again later',
+                      );
+                    }
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -119,8 +153,8 @@ class CheckoutScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       Course course = courseList[index];
                       return ListTile(
-                        leading: Image.asset(
-                          course.thumbnailUrl,
+                        leading: CachedNetworkImage(
+                          imageUrl: course.thumbnailUrl,
                           width: 50,
                           height: 50,
                         ),

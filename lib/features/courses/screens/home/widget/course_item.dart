@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:educode/features/courses/arguments/course_arguments.dart';
 
 import 'package:educode/model/course.dart';
@@ -28,7 +29,9 @@ class CourseItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(course.thumbnailUrl),
+              CachedNetworkImage(
+                imageUrl: course.thumbnailUrl,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 child: Text(

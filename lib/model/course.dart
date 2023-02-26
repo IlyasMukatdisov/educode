@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:educode/model/course_category.dart';
 import 'package:educode/model/section.dart';
 
@@ -73,4 +76,67 @@ class Course {
   int get lessonNo => _lessonNo;
 
   List<Section> get sections => _sections;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      '_id': _id,
+      '_title': _title,
+      '_thumbnailUrl': _thumbnailUrl,
+      '_description': _description,
+      '_createdBy': _createdBy,
+      '_createdDate': _createdDate,
+      '_rate': _rate,
+      '_isFavorite': _isFavorite,
+      '_price': _price,
+      '_courseCategory': _courseCategory.index,
+      '_duration': _duration,
+      '_lessonNo': _lessonNo,
+      '_sections': _sections.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory Course.fromMap(Map<String, dynamic> map) {
+    int index = map['_courseCategory'];
+
+    var priceVar = map['_price'];
+    double price;
+    if (priceVar.runtimeType == int) {
+      price = priceVar.toDouble();
+    } else {
+      price = priceVar;
+    }
+
+    var rateVar = map['_rate'];
+    double rate;
+    if (rateVar.runtimeType == int) {
+      rate = rateVar.toDouble();
+    } else {
+      rate = rateVar;
+    }
+
+    return Course(
+      map['_id'] as String,
+      map['_title'] as String,
+      map['_thumbnailUrl'] as String,
+      map['_description'] as String,
+      map['_createdBy'] as String,
+      map['_createdDate'] as String,
+      rate,
+      map['_isFavorite'] as bool,
+      CourseCategory.values[index],
+      price,
+      map['_duration'] as String,
+      map['_lessonNo'] as int,
+      List<Section>.from(
+        (map['_sections']).map<Section>(
+          (x) => Section.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Course.fromJson(String source) =>
+      Course.fromMap(json.decode(source) as Map<String, dynamic>);
 }
