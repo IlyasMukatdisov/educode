@@ -3,6 +3,7 @@ import 'package:educode/features/auth/screens/register_screen.dart';
 import 'package:educode/features/auth/screens/reset_password_screen.dart';
 import 'package:educode/utils/constants.dart';
 import 'package:educode/utils/route_names.dart';
+import 'package:educode/utils/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -87,8 +88,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     width: size.width,
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await ref
+                      onPressed: () {
+                        ref
                             .read(authControllerProvider)
                             .signInWithEmailAndPassword(
                                 email: _email.text.trim(),
