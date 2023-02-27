@@ -4,14 +4,13 @@ import 'package:educode/features/my_courses/repository/my_courses_repository.dar
 import 'package:educode/features/shopping/repository/shopping_cart_repository.dart';
 import 'package:educode/model/my_course.dart';
 import 'package:educode/utils/constants.dart';
-import 'package:educode/features/my_courses/provider/my_course_data_provider.dart';
-import 'package:educode/features/shopping/provider/shopping_cart_data_provider.dart';
 import 'package:educode/model/course.dart';
 import 'package:educode/features/shopping/screens/widget/payment_methods.dart';
 import 'package:educode/utils/route_names.dart';
 import 'package:educode/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 class CheckoutScreen extends ConsumerWidget {
   const CheckoutScreen({
