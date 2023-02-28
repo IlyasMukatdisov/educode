@@ -19,8 +19,6 @@ class Course {
 
   final double _rate;
 
-  bool _isFavorite;
-
   final double _price;
 
   final CourseCategory _courseCategory;
@@ -39,7 +37,6 @@ class Course {
       this._createdBy,
       this._createdDate,
       this._rate,
-      this._isFavorite,
       this._courseCategory,
       this._price,
       this._duration,
@@ -47,11 +44,6 @@ class Course {
       this._sections);
 
   // ignore: unnecessary_getters_setters
-  bool get isFavorite => _isFavorite;
-
-  set isFavorite(bool value) {
-    _isFavorite = value;
-  }
 
   double get rate => _rate;
 
@@ -86,7 +78,6 @@ class Course {
       '_createdBy': _createdBy,
       '_createdDate': _createdDate,
       '_rate': _rate,
-      '_isFavorite': _isFavorite,
       '_price': _price,
       '_courseCategory': _courseCategory.index,
       '_duration': _duration,
@@ -122,7 +113,6 @@ class Course {
       map['_createdBy'] as String,
       map['_createdDate'] as String,
       rate,
-      map['_isFavorite'] as bool,
       CourseCategory.values[index],
       price,
       map['_duration'] as String,
