@@ -135,7 +135,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Navigator.pushNamed(context, RegisterScreen.routeName);
                       },
                       child: const Text(
-                        "Don't have an account? Create in here",
+                        "Don't have an account? Create it here",
                         style: TextStyle(fontSize: 16),
                       ),
                     ),

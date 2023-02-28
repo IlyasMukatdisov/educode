@@ -12,7 +12,7 @@ class CoursesList extends ConsumerWidget {
 
   Future<List<Course>> getCoursesList(
       BuildContext context, WidgetRef ref) async {
-    var category = ref.read(courseCategoryChangeNotifierProvider).category;
+    var category = ref.watch(courseCategoryChangeNotifierProvider).category;
 
     var allCourses = await ref
         .read(firebaseCourseRepositoryProvider)

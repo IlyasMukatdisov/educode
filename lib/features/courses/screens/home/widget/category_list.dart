@@ -32,7 +32,7 @@ class CategoryList extends ConsumerWidget {
                 onTap: () {
                   ref
                       .read(courseCategoryChangeNotifierProvider)
-                      .changeCategory(category);
+                      .changeCategory(courseCategory);
                 },
                 child: Container(
                   alignment: Alignment.center,
