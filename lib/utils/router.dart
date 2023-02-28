@@ -1,4 +1,3 @@
-import 'package:educode/debug/screens/debug_screen.dart';
 import 'package:educode/features/auth/screens/account_screen.dart';
 import 'package:educode/features/courses/arguments/course_arguments.dart';
 import 'package:educode/features/courses/screens/detail/course_details_screen.dart';
@@ -56,10 +55,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteNames.account:
       return MaterialPageRoute(
         builder: (context) => const AccountScreen(),
-      );
-    case RouteNames.debug:
-      return MaterialPageRoute(
-        builder: (context) => const DebugScreen(),
       );
     case RouteNames.courseDetails:
       {
